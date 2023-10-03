@@ -1,0 +1,18 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata: 
+  name: helm-install
+spec: 
+  schedule: "0 0 * * *"
+  jobTemplate: 
+    spec:
+      template:
+        spec: 
+          containers: 
+          - name: helm-install
+            image: alpine
+            command: 
+            - /bin/sh
+            - -c
+            - helm install --name whatever my-app-resource --set spec.ui.color=#34577c  spec.redis.enabled=true
+          restartPolicy: OnFailure

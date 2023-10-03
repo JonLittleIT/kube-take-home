@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-cron-object
+spec:
+  schedule: "* * * 3 *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: subfinder1
+            image: busybox:1.28
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date; && SUBDOMAINS=$(python /opt/Sublist3r/sublist3r.py -d angislist.com) | curl -X POST --data-urlencode 'payload={"text": "Subdomain results for angislist.com:"}' $(SLACK_WEBHOOK_URL)
+            - for sub in $SUBDOMAINS do nmap -p 443 $sub done
+
+
+            env:
+            - name: SLACK_WEBHOOK_URL
+             valueFrom:
+            secretKeyRef:
+            name: slack-webhook
+            key: webhook_url
+
+          restartPolicy: OnFailure
