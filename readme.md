@@ -44,6 +44,9 @@ Before you can create a Custom Resource, you must first create a Custom Resource
 
 ```kubectl get crd```
 
+
+![Alt text](image.png)
+
 ## verify service is running
 
 ``kubectl get crd myappresources.my.api.group -o jsonpath='{.status.conditions[?(@.type == "Established")].status}'```
@@ -60,6 +63,20 @@ Before you can create a Custom Resource, you must first create a Custom Resource
 
 ### troubleshoot if pod is not started
 
-```kubectl get myappresources.my.api.group myappresource -n default -o json | jq```
+```
+
+kubectl get myappresources.my.api.group myappresource -n default -o json | jq
+
+```
+
+
+TRUE - is the response to know its installed and you have e everything setup.
+
+
+---
+
+
+
+![Alt text](image-1.png)
 
 ```kubectl delete myappresources myappresource```
