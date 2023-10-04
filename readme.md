@@ -57,9 +57,16 @@ Before you can create a Custom Resource, you must first create a Custom Resource
 
 ```kubectl describe pod whatever```
 
+## You must port forward so you can access the app on its default port 9898
+
+```kubectl port-forward <pod-name> <host-port>:<pod-port> ```
+
+
 ## if app is running now check in localhost
 
-```localhost:8080```
+In a web browser you can access podinfo app at the port forward thats been setup.
+
+```localhost:9898```
 
 ### troubleshoot if pod is not started
 
@@ -82,17 +89,13 @@ TRUE - is the response to know its installed and you have e everything setup.
 
 # deploy to cluster with python script
 
-### Activate the virtual environment
-source venv/bin/activate
-
-### install required packages
-
-pip3 install kubernetes <p>
-pip3 install yaml <p>
-
 ```python3 controller3.py```
 
-Script will stay running and update any reconciled differences it needs ot make with a patch to the API
+```
+Script will stay running and update any reconciled differences it needs to make with a patch to the API
+This script will deploy a custom object to Kubernetes using the CustomObjectsApi. It will also watch for changes to the custom object and call the reconcile() function to reconcile any differences between the desired state and the observed state. The script will then compare the desired state with the observed state and take the necessary steps to ensure that the observed state matches the desired state. The script also uses the YAML library to parse the information in the myappresource.yaml file and use it to create the custom object. The Kubernetes API client and config library are also used to communicate with the Kubernetes API. Finally, the script will print out information about the operation performed and the name of the custom object.
+```
+### post use
 
 after done remove resources
 
