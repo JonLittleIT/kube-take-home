@@ -49,7 +49,7 @@ Before you can create a Custom Resource, you must first create a Custom Resource
 
 ## verify service is running
 
-``kubectl get crd myappresources.my.api.group -o jsonpath='{.status.conditions[?(@.type == "Established")].status}'```
+```kubectl get crd myappresources.my.api.group -o jsonpath='{.status.conditions[?(@.type == "Established")].status}'```
 
 ## verify app is up
 
@@ -78,5 +78,22 @@ TRUE - is the response to know its installed and you have e everything setup.
 
 
 ![Alt text](image-1.png)
+
+
+# deploy to cluster with python script
+
+### Activate the virtual environment
+source venv/bin/activate
+
+### install required packages
+
+pip3 install kubernetes <p>
+pip3 install yaml <p>
+
+```python3 controller3.py```
+
+Script will stay running and update any reconciled differences it needs ot make with a patch to the API
+
+after done remove resources
 
 ```kubectl delete myappresources myappresource```

@@ -4,9 +4,12 @@ import yaml
 
 
 
-def reconcile(desired_state, observed_state):
-    # Implement the logic to reconcile differences between desired_state and observed_state
-    pass
+def reconcile(desired_state, observed_state, v1, obj):
+    changes = {}
+    for key in desired_state:
+        # Check if observed_state is None before trying to access it
+        if observed_state is None or key not in observed_state or desired_state[key] != observed_state[key]:
+            changes[key] = desired_state[key]
 
 
 def deploy():
@@ -61,6 +64,12 @@ def main():
             reconcile(desired_state, observed_state)
             resource_version = obj['metadata']['resourceVersion']
 
+
+try:
+    config.load_kube_config()
+    api_client = client.ApiClient()
+except Exception as e:
+    print("Failed to load kube config: ", e)
 
 if __name__ == '__main__':
     main()
